@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.codepresso.codepressoblog.mapper.UserMapper">
+    <select id="findOneByEmailAndPassword" resultType="com.codepresso.codepressoblog.vo.User">
+        SELECT *
+        FROM user
+        WHERE email = #{email} AND password = #{password};
+    </select>
+
+    <insert id="save">
+        INSERT INTO user(email, name, password)
+        VALUES (#{User.email}, #{User.name}, #{User.password});
+    </insert>
+</mapper>

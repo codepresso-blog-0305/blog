@@ -34,4 +34,8 @@ public class CommentService {
         Integer result = commentMapper.delete(id);
         return result == 1;
     }
+
+    public Integer findByCommentId(Integer commentId) {
+        return commentMapper.findByCommentId(commentId);
+    }
 }

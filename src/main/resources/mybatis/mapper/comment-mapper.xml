@@ -39,4 +39,9 @@
         DELETE FROM comment
         WHERE id=#{id};
     </delete>
+
+    <select id="findByCommentId" resultType="Integer">
+        SELECT user_id FROM comment
+        WHERE id=#{commentId};
+    </select>
 </mapper>

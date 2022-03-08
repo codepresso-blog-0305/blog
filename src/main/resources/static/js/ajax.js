@@ -236,11 +236,8 @@ $("#more-comment-button").click(function(){
     $(document).on("click",".comment-edit-button",function(){
         var id = $(this).parent().parent().children(".comment-id").val();
         var content = $(this).parent().parent().children(".comment-edit").val();
-        var user_id = $("#comment-userId").val();
+        var user_id = $(this).parent().parent().children(".comment-userId").val();
 
-        console.log("user_id = " + user_id);
-        console.log("id = " + id);
-        console.log("content = " + content);
         $.ajax({
             method: "PUT",
             url: "/comment",
@@ -283,6 +280,10 @@ $("#more-comment-button").click(function(){
         })
         .done(function(response) {
             window.location.reload();
-        });
+        })
+            .fail(function(response) {
+                alert("댓글 삭제 권한이 없습니다");
+                window.location.reload();
+            });
     });
 });

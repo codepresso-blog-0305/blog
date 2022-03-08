@@ -43,7 +43,6 @@ public class CommentController {
         commentDto.setUsername(userSession.getName());
 
         Comment comment = commentDto.getComment();
-        System.out.println("create comment.getUserId() = " + comment.getUserId());
         commentService.saveComment(comment);
 
         return "success";
@@ -53,7 +52,7 @@ public class CommentController {
     public String updateComment(@RequestBody CommentRequestDto commentDto, HttpServletRequest request) {
         int userId = userSessionService.getUserIdByCookie(request);
         Comment comment = commentDto.getComment();
-        System.out.println("update comment.getUserId() = " + comment.getUserId());
+
         if(comment.getUserId() != userId) {
             throw new NoSuchElementException();
         }
@@ -64,7 +63,16 @@ public class CommentController {
     }
 
     @DeleteMapping("/comment")
-    public String deleteComment(@RequestParam Integer id) {
+    public String deleteComment(@RequestParam Integer id, HttpServletRequest request) {
+        int userId = userSessionService.getUserIdByCookie(request);
+
+        //id -> comment_id 이걸로 comment의 user_id?
+        Integer commentUserID = commentService.findByCommentId(id);
+
+        if(commentUserID != userId) {
+            throw new NoSuchElementException();
+        }
+
         commentService.deleteComment(id);
 
         return "success";

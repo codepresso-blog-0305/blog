@@ -13,4 +13,5 @@ public interface CommentMapper {
     Integer save(@Param("comment") Comment comment);
     Integer update(@Param("comment") Comment comment);
     Integer delete(@Param("id") Integer id);
+    Integer findByCommentId(@Param("commentId") Integer id);
 }

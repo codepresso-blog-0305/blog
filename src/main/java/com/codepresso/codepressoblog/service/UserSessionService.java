@@ -31,7 +31,6 @@ public class UserSessionService {
     }
 
     public Integer getUserIdByCookie(HttpServletRequest request) {
-        System.out.println("cookie start!");
         int session_id = 0;
         Cookie[] list = request.getCookies();
         for(Cookie cookie:list) {
@@ -41,8 +40,6 @@ public class UserSessionService {
             }
         }
         UserSession userSession = getUserSessionById(session_id);
-        System.out.println("userSession.getUserId() = " + userSession.getUserId());
-        System.out.println("bye!!");
         return userSession.getUserId();
     }
 }

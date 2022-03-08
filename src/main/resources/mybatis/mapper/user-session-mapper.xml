@@ -4,7 +4,7 @@
 
 <mapper namespace="com.codepresso.codepressoblog.mapper.UserSessionMapper">
     <select id="findOneById" resultType="com.codepresso.codepressoblog.vo.UserSession">
-        SELECT *
+        SELECT id, user_id as userId, name
         FROM user_session
         WHERE id = #{id};
     </select>

@@ -96,25 +96,18 @@ $(function(){
     });
 
     $("#create_button").click(function(){
-        var session_id = $.cookie('id');
-        $.ajax({
-            method: "GET",
-            url: "/user/session",
-            data: {"id": session_id }
-        }).done(function(response) {
-            console.log(response);
-        });
-
+        var session_id = Number($.cookie('id'));
+        console.log(session_id);
         var title = $("#post-title").val();
-        var username = $("#post-username").val();
+        // var username = $("#post-username").val();
         var content = $("#post-content").val();
 
         $.ajax({
             method: "POST",
             url: "/post",
             data: JSON.stringify({
+                "userId": session_id,
                 "title": title,
-                "username": username,
                 "content": content
             }),
             contentType: "application/json"
@@ -143,10 +136,46 @@ $(function(){
         .done(function(response) {
             console.log("Post creation success!");
             window.location.href = "/post/" + id;
+        })
+    });
+
+    $("#post-edit").click(function(){
+        // var session_id = Number($.cookie('id'));
+        var id = $("#post-id").val();
+
+        $.ajax({
+            method: "GET",
+            url: "/post/edit/" + id,
+        })
+            .done(function(response) {
+                console.log("Post edit addmission success!");
+            })
+            .fail(function(response) {
+                alert("수정 권한이 없습니다");
+                window.location.href = "/post/" + id;
+            });
+    });
+
+    $("#post-delete").click(function() {
+        var id = $("#post-id").val();
+
+        $.ajax({
+            method: "DELETE",
+            url: "/post/" + id
+        })
+        .done(function(response) {
+            console.log("Post delete success!");
+            window.location.href = "/";
+        })
+        .fail(function(response) {
+            alert("삭제 권한이 없습니다");
+            window.location.href = "/post/" + id;
         });
     });
 
-    $("#more-comment-button").click(function(){
+
+
+$("#more-comment-button").click(function(){
         var next_page = parseInt($(this).attr("current-comment-page")) + 1;
         var post_id = parseInt($("#post-id").val());
         $.ajax({
@@ -183,16 +212,18 @@ $(function(){
     });
 
     $("#comment-save-button").click(function(){
-        var username = $("#comment-username").val();
+        // var username = $("#comment-username").val();
+        var session_id = Number($.cookie('id'));
         var content = $("#comment-content").val();
         var post_id = $("#post-id").val();
+
 
         $.ajax({
             method: "POST",
             url: "/comment",
             data: JSON.stringify({
                 "postId": post_id,
-                "username": username,
+                "userId": session_id,
                 "content": content
             }),
             contentType: "application/json"
@@ -205,7 +236,9 @@ $(function(){
     $(document).on("click",".comment-edit-button",function(){
         var id = $(this).parent().parent().children(".comment-id").val();
         var content = $(this).parent().parent().children(".comment-edit").val();
+        var user_id = $("#comment-userId").val();
 
+        console.log("user_id = " + user_id);
         console.log("id = " + id);
         console.log("content = " + content);
         $.ajax({
@@ -213,13 +246,18 @@ $(function(){
             url: "/comment",
             data: JSON.stringify({
                 "id": id,
-                "content": content
+                "content": content,
+                "userId": user_id
             }),
             contentType: "application/json"
         })
         .done(function(response) {
             window.location.reload();
-        });
+        })
+            .fail(function(response) {
+                alert("댓글 수정 권한이 없습니다");
+                window.location.reload();
+            });
     });
 
     $(document).on("click",".comment-edit-form-button",function(){

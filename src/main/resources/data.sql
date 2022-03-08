@@ -2,6 +2,8 @@ INSERT INTO user(email, name, password)
 VALUES ('dhlee@codepresso.kr', 'dhlee', 'asdf1234');
 INSERT INTO user(email, name, password)
 VALUES ('jhkim@codepresso.kr', 'jhkim', 'asdf1234');
+INSERT INTO user(email, name, password)
+VALUES ('aa@naver.com', 'aa', 'aa');
 
 INSERT INTO post(user_id, title, content)
 VALUES (1, 'Spring Web', 'Build web, including RESTful, applications using Spring MVC.');

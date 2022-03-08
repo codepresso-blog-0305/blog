@@ -21,7 +21,6 @@ public class IndexController {
     public String index(Model model) {
         List<Post> postList = postService.getPostListByPage(1, 3);
         model.addAttribute("posts", postList);
-        System.out.println(postList.get(0).getUser().getName());
         return "index";
     }
 }

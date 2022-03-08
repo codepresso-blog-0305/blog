@@ -8,7 +8,8 @@
             c.id,
             c.post_id,
             c.content,
-            u.name
+            u.name as username,
+            u.id as userId
         FROM comment as c
                  JOIN user as u
                       ON c.user_id = u.id
@@ -24,8 +25,8 @@
     </select>
 
     <insert id="save">
-        INSERT INTO comment(post_id, content, username)
-        VALUES (#{comment.postId}, #{comment.content}, #{comment.username});
+        INSERT INTO comment(post_id, content, user_id)
+        VALUES (#{comment.postId}, #{comment.content}, #{comment.userId});
     </insert>
 
     <update id="update">

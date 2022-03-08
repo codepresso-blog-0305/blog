@@ -47,8 +47,8 @@
     </select>
 
     <insert id="save">
-        INSERT INTO post(title, content, username)
-        VALUES (#{post.title}, #{post.content}, #{post.username});
+        INSERT INTO post(user_id, title, content)
+        VALUES (#{post.userId}, #{post.title}, #{post.content});
     </insert>
 
     <update id="update">
@@ -56,5 +56,11 @@
         SET title=#{post.title}, content=#{post.content}
         WHERE id=#{post.id};
     </update>
+
+    <delete id="delete">
+        DELETE FROM post
+        WHERE id=#{id};
+    </delete>
+
 </mapper>
 
